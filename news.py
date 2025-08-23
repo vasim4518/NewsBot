@@ -10,6 +10,7 @@ def get_top_news():
     url = f"https://newsapi.org/v2/top-headlines?language=en&pageSize=5&apiKey={NEWS_API_KEY}"
     res = requests.get(url)
     data = res.json()
+    print(data)
 
     if data.get("status") != "ok":
         return ["Failed to fetch news"]

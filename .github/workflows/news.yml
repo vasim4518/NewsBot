@@ -1,0 +1,19 @@
+name: Daily News to WhatsApp
+on:
+  schedule:
+    - cron: "0 7 * * *"  # Runs daily at 7 AM UTC
+jobs:
+  send-news:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    - run: pip install requests
+    - run: python news.py
+      env:
+        NEWS_API_KEY: ${{ secrets.NEWS_API_KEY }}
+        WHATSAPP_TOKEN: ${{ secrets.WHATSAPP_TOKEN }}
+        PHONE_NUMBER_ID: ${{ secrets.PHONE_NUMBER_ID }}
+        RECIPIENT_PHONE: ${{ secrets.RECIPIENT_PHONE }}

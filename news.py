@@ -30,7 +30,7 @@ payload = {
     "type": "template",
     "template": {
         "name": "news",   # 🔹 Use the NEW template name you created
-        "language": {"code": "en_US"},
+        "language": {"code": "en"},
         "components": [
             {
                 "type": "body",

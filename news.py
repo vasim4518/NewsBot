@@ -29,7 +29,7 @@ payload = {
     "to": RECIPIENT_PHONE,
     "type": "template",
     "template": {
-        "name": "daily_news_update",   # 🔹 Use the NEW template name you created
+        "name": "news",   # 🔹 Use the NEW template name you created
         "language": {"code": "en_US"},
         "components": [
             {

@@ -1,36 +1,29 @@
-
-import requests
-import os
+import requests, os
 
 NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN")
 PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
 RECIPIENT_PHONE = os.getenv("RECIPIENT_PHONE")
 
-# 1️⃣ Fetch top 5 news
-news_url = f"https://newsapi.org/v2/top-headlines?language=en&pageSize=5&apiKey={NEWS_API_KEY}"
-articles = requests.get(news_url).json().get("articles", [])
-headlines = [a['title'] for a in articles]
+# --- Get Top 5 News ---
+url = f"https://newsapi.org/v2/top-headlines?language=en&pageSize=5&apiKey={NEWS_API_KEY}"
+articles = requests.get(url).json().get("articles", [])
+news_text = "🌍 Top 5 News Today:\n" + "\n".join(
+    [f"{i+1}. {a['title']}" for i,a in enumerate(articles)]
+)
 
-# 2️⃣ Send via WhatsApp Cloud API
-url = f"https://graph.facebook.com/v18.0/{PHONE_NUMBER_ID}/messages"
+# --- Send to WhatsApp ---
+send_url = f"https://graph.facebook.com/v20.0/{PHONE_NUMBER_ID}/messages"
 headers = {
     "Authorization": f"Bearer {WHATSAPP_TOKEN}",
     "Content-Type": "application/json"
 }
-
-data = {
+payload = {
     "messaging_product": "whatsapp",
     "to": RECIPIENT_PHONE,
-    "type": "template",
-    "template": {
-        "name": "daily_news",
-        "language": {"code": "en_US"},
-        "components": [
-            {"type": "body", "parameters": [{"type": "text", "text": h} for h in headlines]}
-        ]
-    }
+    "type": "text",
+    "text": {"body": news_text}
 }
 
-resp = requests.post(url, headers=headers, json=data)
-print(resp.status_code, resp.text)
+res = requests.post(send_url, headers=headers, json=payload)
+print("WhatsApp response:", res.json())

@@ -17,9 +17,13 @@ def get_news():
 # 2. Send WhatsApp Template Message
 def send_whatsapp_news(news_items):
     components = []
-    for title, link in news_items:
-        components.append(title)  # Limit headline to 80 chars
-        components.append(link)
+    for title, link in news_items[:5]:  # ensure max 5
+        components.append(title)        # headline
+        components.append(link)         # url
+
+    # pad missing values if less than 10
+    while len(components) < 10:
+        components.append("N/A")
 
     payload = {
         "messaging_product": "whatsapp",
@@ -37,11 +41,11 @@ def send_whatsapp_news(news_items):
         }
     }
 
-    url = f"https://graph.facebook.com/v22.0/{PHONE_NUMBER_ID}/messages"
+    url = f"https://graph.facebook.com/v17.0/{PHONE_NUMBER_ID}/messages"
     headers = {"Authorization": f"Bearer {WHATSAPP_TOKEN}", "Content-Type": "application/json"}
-
     response = requests.post(url, headers=headers, json=payload)
     print("API Response:", response.json())
+
 
 if __name__ == "__main__":
     news_items = get_news()

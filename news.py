@@ -20,7 +20,7 @@ RECIPIENT_PHONE = os.getenv("RECIPIENT_PHONE")
 # GNews
 def get_news():
     print("GNEWS_API_KEY:",GNEWS_API_KEY)
-    url = f"https://gnews.io/api/v4/top-headlines?token={GNEWS_API_KEY}&lang=en&country=in&max=5"
+    url = f"https://gnews.io/api/v4/top-headlines?token=72836b645f8117953883b286dc942f25&lang=en&country=in&max=5"
     res = requests.get(url).json()
     print("GNews response:", res)  # Debugging
     articles = res.get("articles", [])

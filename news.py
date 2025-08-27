@@ -11,6 +11,7 @@ def get_news():
     url = f"https://newsapi.org/v2/top-headlines?country=in&pageSize=5&apiKey={NEWS_API_KEY}"
     response = requests.get(url)
     data = response.json()
+    print("Raw API Response:",data)
     articles = data.get("articles", [])
     return [(a["title"], a["url"]) for a in articles[:5]]
 

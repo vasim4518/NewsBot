@@ -2,6 +2,7 @@ import os
 import requests
 
 NEWS_API_KEY = os.getenv("NEWS_API_KEY")
+GNEWS_API_KEY = os.getenv("GNEWS_API_KEY")
 WHATSAPP_TOKEN = os.getenv("WHATSAPP_TOKEN")
 PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
 RECIPIENT_PHONE = os.getenv("RECIPIENT_PHONE")

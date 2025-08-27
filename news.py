@@ -7,13 +7,24 @@ PHONE_NUMBER_ID = os.getenv("PHONE_NUMBER_ID")
 RECIPIENT_PHONE = os.getenv("RECIPIENT_PHONE")
 
 # 1. Fetch top headlines
+# NewsAPI
+# def get_news():
+#     url = f"https://newsapi.org/v2/top-headlines?country=us&category=general&pageSize=5&apiKey={NEWS_API_KEY}"
+#     response = requests.get(url)
+#     data = response.json()
+#     print("Raw API Response:",data)
+#     articles = data.get("articles", [])
+#     return [(a["title"], a["url"]) for a in articles[:5]]
+
+# GNews
 def get_news():
-    url = f"https://newsapi.org/v2/top-headlines?country=us&category=general&pageSize=5&apiKey={NEWS_API_KEY}"
-    response = requests.get(url)
-    data = response.json()
-    print("Raw API Response:",data)
-    articles = data.get("articles", [])
-    return [(a["title"], a["url"]) for a in articles[:5]]
+    url = f"https://gnews.io/api/v4/top-headlines?token={GNEWS_API_KEY}&lang=en&country=in&max=5"
+    res = requests.get(url).json()
+    print("GNews response:", res)  # Debugging
+    articles = res.get("articles", [])
+    return [(a.get("title", "No title"), a.get("url", "")) for a in articles]
+
+
 
 # 2. Send WhatsApp Template Message
 def send_whatsapp_news(news_items):

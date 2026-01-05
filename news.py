@@ -57,6 +57,8 @@ def send_whatsapp_news(news_items):
 
     url = f"https://graph.facebook.com/v17.0/{PHONE_NUMBER_ID}/messages"
     headers = {"Authorization": f"Bearer {WHATSAPP_TOKEN}", "Content-Type": "application/json"}
+    print("url-",url)
+    print("headers-",headers)
     response = requests.post(url, headers=headers, json=payload)
     print("API Response:", response.json())
 
